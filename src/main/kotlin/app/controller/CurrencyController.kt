@@ -5,6 +5,7 @@ import app.domain.CurrencyService
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.validation.Validated
+import java.math.BigDecimal
 import java.util.*
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
@@ -48,7 +49,7 @@ class CurrencyController(private val currencyService: CurrencyService) {
     @Get("/{fromCurrency}/{targetCurrency}/{value}")
     fun convertCurrency(@NotNull fromCurrency: Currency,
                         @NotNull targetCurrency: Currency,
-                        @Min(0) value: Double): Optional<Double> {
+                        @Min(0) value: BigDecimal): Optional<BigDecimal> {
         return currencyService.convertCurrency(fromCurrency, targetCurrency, value)
     }
 }

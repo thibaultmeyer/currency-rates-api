@@ -11,6 +11,7 @@ import org.w3c.dom.Document
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.net.URL
 import java.net.URLConnection
 import javax.inject.Singleton
@@ -45,7 +46,7 @@ class ECBCrawlerJob(private val currencyService: CurrencyService) {
                 val currency = node.attributes.getNamedItem("currency").nodeValue
                 val rate = BigDecimal(node.attributes.getNamedItem("rate").nodeValue)
 
-                val currencyRate = CurrencyRate(rateToBase = EUR_BASE_CURRENCY_RATE / rate.toDouble(), rateFromBase = rate.toDouble())
+                val currencyRate = CurrencyRate(rateToBase = EUR_BASE_CURRENCY_RATE.divide(rate, 10, RoundingMode.HALF_DOWN), rateFromBase = rate)
                 currencyService.updateCurrencyRate(currency = Currency.valueOf(currency), currencyRate = currencyRate)
             }
         }

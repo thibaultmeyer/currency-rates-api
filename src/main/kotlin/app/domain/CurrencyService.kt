@@ -2,6 +2,7 @@ package app.domain
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.math.BigDecimal
 import java.util.*
 import javax.inject.Singleton
 
@@ -27,7 +28,7 @@ class CurrencyService {
      */
     fun convertCurrency(fromCurrency: Currency,
                         targetCurrency: Currency,
-                        value: Double): Optional<Double> {
+                        value: BigDecimal): Optional<BigDecimal> {
         val rateToBase = currencyRateMap[fromCurrency]?.rateToBase ?: return Optional.empty()
         val currencyRateTo = currencyRateMap[targetCurrency]?.rateFromBase ?: return Optional.empty()
         val valueInEUR = rateToBase * value
@@ -58,6 +59,6 @@ class CurrencyService {
         /**
          * Base currency rate (EUR).
          */
-        const val EUR_BASE_CURRENCY_RATE: Double = 1.0
+        val EUR_BASE_CURRENCY_RATE: BigDecimal = BigDecimal.ONE
     }
 }
