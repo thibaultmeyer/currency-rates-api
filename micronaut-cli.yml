@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: app
+testFramework: kotlintest
+sourceLanguage: kotlin
+buildTool: maven
+features: [annotation-api, app-name, docker, file-watch, http-client, kotlin, kotlin-application, kotlintest, logback, maven, netty-server, readme, shade, yaml]
