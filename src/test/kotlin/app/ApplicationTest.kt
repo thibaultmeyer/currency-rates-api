@@ -16,4 +16,9 @@ class ApplicationTest {
     fun applicationIsRunning() {
         Assertions.assertTrue(application.isRunning)
     }
+
+    @Test
+    fun applicationIsServer() {
+        Assertions.assertTrue(application.isServer)
+    }
 }
