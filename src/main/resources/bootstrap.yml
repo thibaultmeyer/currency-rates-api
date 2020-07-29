@@ -1,0 +1,15 @@
+micronaut:
+    application:
+        name: currency-rates-api
+    config-client:
+        enabled: ${CONSUL_CONFIG:false}
+    server:
+        port: 8000
+
+consul:
+    client:
+        config:
+            format: YAML
+        registration:
+            enabled: ${CONSUL_REGISTRATION:false}
+        defaultZone: "${CONSUL_HOST:127.0.0.1}:${CONSUL_PORT:8500}"
