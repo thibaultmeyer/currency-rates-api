@@ -1,5 +1,6 @@
 package app.domain
 
+import app.entity.ExchangeInformationEntity
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.math.BigDecimal
@@ -28,12 +29,34 @@ class CurrencyService {
      */
     fun convertCurrency(fromCurrency: Currency,
                         targetCurrency: Currency,
-                        value: BigDecimal): Optional<BigDecimal> {
+                        value: BigDecimal): Optional<ExchangeInformationEntity> {
         val rateToBase = currencyRateMap[fromCurrency]?.rateToBase ?: return Optional.empty()
         val currencyRateTo = currencyRateMap[targetCurrency]?.rateFromBase ?: return Optional.empty()
         val valueInEUR = rateToBase * value
 
-        return Optional.of(valueInEUR * currencyRateTo)
+        return Optional.of(ExchangeInformationEntity(fromCurrency, value, targetCurrency, valueInEUR * currencyRateTo))
+    }
+
+    /**
+     * Convert currency to  all other available currencies.
+     *
+     * @param fromCurrency from currency (ex: EUR)
+     * @param value value to convert (ex: 123.45)
+     * @return a list with values converter in named currency
+     */
+    fun convertCurrencyToAll(fromCurrency: Currency,
+                             value: BigDecimal): List<ExchangeInformationEntity> {
+        val results = mutableListOf<ExchangeInformationEntity>()
+
+        Currency.values().iterator().forEach { toCurrency ->
+            if (fromCurrency != toCurrency) {
+                convertCurrency(fromCurrency, toCurrency, value).ifPresent { exchangeInformation ->
+                    results.add(exchangeInformation)
+                }
+            }
+        }
+
+        return results
     }
 
     /**

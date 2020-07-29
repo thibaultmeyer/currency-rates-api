@@ -2,6 +2,7 @@ package app.controller
 
 import app.domain.Currency
 import app.domain.CurrencyService
+import app.entity.ExchangeInformationEntity
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.validation.Validated
@@ -30,12 +31,12 @@ class CurrencyController(private val currencyService: CurrencyService) {
     /**
      * Retrieve all conversion rate from a given base currency to others available currencies.
      *
-     * @param baseCurrency base currency (ex: EUR)
+     * @param fromCurrency from currency (ex: EUR)
      * @return a list of conversion rate
      */
-    @Get("/{baseCurrency}")
-    fun currencyRate(@NotNull baseCurrency: Currency): String {
-        return baseCurrency.name
+    @Get("/{fromCurrency}")
+    fun currencyRate(@NotNull fromCurrency: Currency): List<ExchangeInformationEntity> {
+        return currencyService.convertCurrencyToAll(fromCurrency, BigDecimal.ONE)
     }
 
     /**
@@ -49,7 +50,7 @@ class CurrencyController(private val currencyService: CurrencyService) {
     @Get("/{fromCurrency}/{targetCurrency}/{value}")
     fun convertCurrency(@NotNull fromCurrency: Currency,
                         @NotNull targetCurrency: Currency,
-                        @Min(0) value: BigDecimal): Optional<BigDecimal> {
+                        @Min(0) value: BigDecimal): Optional<ExchangeInformationEntity> {
         return currencyService.convertCurrency(fromCurrency, targetCurrency, value)
     }
 }

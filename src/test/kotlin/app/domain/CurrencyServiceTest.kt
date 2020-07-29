@@ -18,10 +18,16 @@ class CurrencyServiceTest {
 
     @BeforeAll
     fun beforeAll() {
-        val rateUsd = BigDecimal.valueOf(1.14274)
+        val rateUsd: BigDecimal = BigDecimal.valueOf(1.14274)
         currencyService.updateCurrencyRate(
             Currency.USD,
             CurrencyRate(CurrencyService.EUR_BASE_CURRENCY_RATE.divide(rateUsd, 10, RoundingMode.HALF_DOWN), rateUsd)
+        )
+
+        val rateAud: BigDecimal = BigDecimal.valueOf(1.6348)
+        currencyService.updateCurrencyRate(
+            Currency.AUD,
+            CurrencyRate(CurrencyService.EUR_BASE_CURRENCY_RATE.divide(rateAud, 10, RoundingMode.HALF_DOWN), rateAud)
         )
     }
 
@@ -40,8 +46,10 @@ class CurrencyServiceTest {
         val resultOptional = currencyService.convertCurrency(Currency.EUR, Currency.USD, BigDecimal.ONE)
 
         // Then
+        val valueOneEurToUsdExpected = BigDecimal.valueOf(1.14274)
+
         Assertions.assertTrue(resultOptional.isPresent)
-        Assertions.assertEquals(BigDecimal.valueOf(1.14274), resultOptional.orElse(null))
+        Assertions.assertEquals(valueOneEurToUsdExpected, resultOptional.get().toValue)
     }
 
     @Test
@@ -50,10 +58,23 @@ class CurrencyServiceTest {
         val resultOptional = currencyService.convertCurrency(Currency.USD, Currency.EUR, BigDecimal.ONE)
 
         // Then
+        val valueOneUsdToEurExpected = BigDecimal.valueOf(0.8750896967)
+
         Assertions.assertTrue(resultOptional.isPresent)
-        Assertions.assertEquals(
-            CurrencyService.EUR_BASE_CURRENCY_RATE.divide(BigDecimal.valueOf(1.14274), 10, RoundingMode.HALF_DOWN),
-            resultOptional.orElse(null)
-        )
+        Assertions.assertEquals(valueOneUsdToEurExpected, resultOptional.get().toValue)
+    }
+
+    @Test
+    fun convertEurToAllCurrencies() {
+        // When
+        val resultList = currencyService.convertCurrencyToAll(Currency.EUR, BigDecimal.ONE)
+
+        // Then
+        val valueOneEurToAudExpected = BigDecimal.valueOf(1.6348)
+        val valueOneEurToUsdExpected = BigDecimal.valueOf(1.14274)
+
+        Assertions.assertTrue(resultList.isNotEmpty())
+        Assertions.assertEquals(valueOneEurToAudExpected, resultList[0].toValue)
+        Assertions.assertEquals(valueOneEurToUsdExpected, resultList[1].toValue)
     }
 }
