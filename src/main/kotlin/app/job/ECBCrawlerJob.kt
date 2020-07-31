@@ -47,11 +47,11 @@ class ECBCrawlerJob(private val currencyService: CurrencyService) {
                 val node = nodes.item(idx)
 
                 if (node.attributes.getNamedItem("currency") != null) {
-                    val currency = node.attributes.getNamedItem("currency").nodeValue
+                    val currency = Currency.valueOf(node.attributes.getNamedItem("currency").nodeValue)
                     val rate = BigDecimal(node.attributes.getNamedItem("rate").nodeValue)
 
-                    val currencyRate = CurrencyRate(rateToBase = EUR_BASE_CURRENCY_RATE.divide(rate, 10, RoundingMode.HALF_DOWN), rateFromBase = rate)
-                    currencyService.updateCurrencyRate(currency = Currency.valueOf(currency), currencyRate = currencyRate)
+                    val currencyRate = CurrencyRate(EUR_BASE_CURRENCY_RATE.divide(rate, 10, RoundingMode.HALF_DOWN), rate)
+                    currencyService.updateCurrencyRate(currency, currencyRate)
                 }
             }
         } catch (ex: ConnectException) {
