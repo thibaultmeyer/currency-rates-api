@@ -197,7 +197,7 @@
                                 </annotationProcessorPath>
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
-                                <annotationProcessorArg>micronaut.processing.group=app</annotationProcessorArg>
+                                <annotationProcessorArg>micronaut.processing.group=com.zero_x_baadf00d</annotationProcessorArg>
                                 <annotationProcessorArg>micronaut.processing.module=currency-rates-api</annotationProcessorArg>
                             </annotationProcessorArgs>
                         </configuration>
