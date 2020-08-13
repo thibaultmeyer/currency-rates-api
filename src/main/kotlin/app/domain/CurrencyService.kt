@@ -30,6 +30,10 @@ class CurrencyService {
     fun convertCurrency(fromCurrency: Currency,
                         targetCurrency: Currency,
                         value: BigDecimal): Optional<ExchangeInformationEntity> {
+        if (fromCurrency == targetCurrency) {
+            return Optional.of(ExchangeInformationEntity(fromCurrency, value, targetCurrency, value))
+        }
+
         val rateToBase = currencyRateMap[fromCurrency]?.rateToBase ?: return Optional.empty()
         val currencyRateTo = currencyRateMap[targetCurrency]?.rateFromBase ?: return Optional.empty()
         val valueInEUR = rateToBase * value
