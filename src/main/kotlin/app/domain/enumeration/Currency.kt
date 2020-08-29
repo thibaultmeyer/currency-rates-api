@@ -1,4 +1,4 @@
-package app.domain
+package app.domain.enumeration
 
 /**
  * All currencies currently handled by this application.

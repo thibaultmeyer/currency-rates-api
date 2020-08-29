@@ -1,8 +1,8 @@
-package app.controller
+package app.rest.controller
 
-import app.domain.Currency
-import app.domain.CurrencyService
-import app.entity.ExchangeInformationEntity
+import app.domain.enumeration.Currency
+import app.domain.service.CurrencyService
+import app.domain.entity.ExchangeInformationEntity
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.validation.Validated

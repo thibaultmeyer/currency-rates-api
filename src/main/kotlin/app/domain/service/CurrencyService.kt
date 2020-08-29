@@ -1,6 +1,8 @@
-package app.domain
+package app.domain.service
 
-import app.entity.ExchangeInformationEntity
+import app.domain.enumeration.Currency
+import app.domain.entity.CurrencyRate
+import app.domain.entity.ExchangeInformationEntity
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.math.BigDecimal

@@ -1,9 +1,9 @@
 package app.job
 
-import app.domain.Currency
-import app.domain.CurrencyRate
-import app.domain.CurrencyService
-import app.domain.CurrencyService.Companion.EUR_BASE_CURRENCY_RATE
+import app.domain.enumeration.Currency
+import app.domain.entity.CurrencyRate
+import app.domain.service.CurrencyService
+import app.domain.service.CurrencyService.Companion.EUR_BASE_CURRENCY_RATE
 import io.micronaut.scheduling.annotation.Scheduled
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

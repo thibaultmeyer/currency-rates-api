@@ -1,6 +1,6 @@
-package app.entity
+package app.domain.entity
 
-import app.domain.Currency
+import app.domain.enumeration.Currency
 import io.micronaut.core.annotation.Introspected
 import java.math.BigDecimal
 

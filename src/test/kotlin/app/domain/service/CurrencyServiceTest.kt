@@ -1,5 +1,7 @@
-package app.domain
+package app.domain.service
 
+import app.domain.entity.CurrencyRate
+import app.domain.enumeration.Currency
 import io.micronaut.test.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
