@@ -25,7 +25,7 @@ GET /currency
 ]
 ```
 
-**List available exchange rates for a given currency**
+**Convert from a given base currency to others available currencies**
 ```http
 GET /currency/EUR
 
@@ -42,6 +42,26 @@ GET /currency/EUR
     "fromValue": 1,
     "toCurrency": "ZAR",
     "toValue": 19.3269
+  }
+]
+```
+
+```http
+GET /currency/EUR?value=2
+
+[
+  {
+    "fromCurrency": "EUR",
+    "fromValue": 2,
+    "toCurrency": "AUD",
+    "toValue": 3.2696
+  },
+  ...
+  {
+    "fromCurrency": "EUR",
+    "fromValue": 2,
+    "toCurrency": "ZAR",
+    "toValue": 38.6538
   }
 ]
 ```
