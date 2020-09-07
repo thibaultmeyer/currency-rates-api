@@ -5,6 +5,7 @@ import app.domain.service.CurrencyService
 import app.domain.entity.ExchangeInformationEntity
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.QueryValue
 import io.micronaut.validation.Validated
 import java.math.BigDecimal
 import java.util.*
@@ -29,14 +30,16 @@ class CurrencyController(private val currencyService: CurrencyService) {
     }
 
     /**
-     * Retrieve all conversion rate from a given base currency to others available currencies.
+     * Convert from a given base currency to others available currencies.
      *
      * @param fromCurrency from currency (ex: EUR)
+     * @param value value to use
      * @return a list of conversion rate
      */
     @Get("/{fromCurrency}")
-    fun currencyRate(@NotNull fromCurrency: Currency): List<ExchangeInformationEntity> {
-        return currencyService.convertCurrencyToAll(fromCurrency, BigDecimal.ONE)
+    fun convertToAll(@NotNull fromCurrency: Currency,
+                     @QueryValue(defaultValue = "1") @Min(0) value: BigDecimal): List<ExchangeInformationEntity> {
+        return currencyService.convertCurrencyToAll(fromCurrency, value)
     }
 
     /**
